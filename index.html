@@ -1,0 +1,532 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Team Six Seven — HSBC/HKU Business Case Challenge 2026</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap" rel="stylesheet" />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      font-family: 'Inter', system-ui, -apple-system, sans-serif;
+      background: #f5f5f5;
+      color: #1a1a1a;
+      min-height: 100vh;
+    }
+
+    .page {
+      max-width: 680px;
+      margin: 0 auto;
+      padding: 2rem 1rem 3rem;
+    }
+
+    /* ── HERO ── */
+    .hero {
+      background: #DB0011;
+      border-radius: 16px;
+      padding: 2rem 1.5rem 1.75rem;
+      text-align: center;
+      margin-bottom: 1.75rem;
+      position: relative;
+      overflow: hidden;
+    }
+    .hero::before {
+      content: '';
+      position: absolute;
+      top: -40px; right: -40px;
+      width: 160px; height: 160px;
+      border-radius: 50%;
+      background: rgba(255,255,255,0.07);
+      pointer-events: none;
+    }
+    .hero::after {
+      content: '';
+      position: absolute;
+      bottom: -50px; left: -30px;
+      width: 130px; height: 130px;
+      border-radius: 50%;
+      background: rgba(255,255,255,0.05);
+      pointer-events: none;
+    }
+
+    .flags-row {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+      margin-bottom: 1rem;
+    }
+    /* Inline flag SVGs via img-style spans */
+    .flag {
+      width: 32px;
+      height: 22px;
+      border-radius: 3px;
+      display: inline-block;
+      overflow: hidden;
+      flex-shrink: 0;
+      box-shadow: 0 1px 3px rgba(0,0,0,0.3);
+    }
+    .flag img { width: 100%; height: 100%; object-fit: cover; display: block; }
+
+    .hsbc-logo-wrap {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+    }
+    /* HSBC hexagon logo drawn in SVG inline */
+    .hsbc-hex {
+      display: inline-block;
+      vertical-align: middle;
+    }
+
+    .hero-eyebrow {
+      font-size: 10px;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: rgba(255,255,255,0.6);
+      margin-bottom: 0.4rem;
+      margin-top: 0.75rem;
+    }
+    .hero-title {
+      font-size: 32px;
+      font-weight: 600;
+      color: #fff;
+      letter-spacing: -0.5px;
+      margin-bottom: 0.3rem;
+      line-height: 1.15;
+    }
+    .hero-sub {
+      font-size: 13px;
+      color: rgba(255,255,255,0.72);
+      margin-bottom: 1rem;
+    }
+    .badge-row {
+      display: flex;
+      gap: 8px;
+      justify-content: center;
+      flex-wrap: wrap;
+    }
+    .badge {
+      font-size: 11px;
+      font-weight: 500;
+      padding: 4px 12px;
+      border-radius: 20px;
+      background: rgba(255,255,255,0.14);
+      color: rgba(255,255,255,0.88);
+      border: 0.5px solid rgba(255,255,255,0.25);
+    }
+    .badge-gold {
+      background: rgba(212,175,55,0.22);
+      border-color: rgba(212,175,55,0.55);
+      color: #f5d97a;
+    }
+
+    /* ── TEAM GRID ── */
+    .section-label {
+      font-size: 10px;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: #999;
+      margin-bottom: 0.75rem;
+    }
+    .team-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 12px;
+      margin-bottom: 1.75rem;
+    }
+    @media (max-width: 500px) {
+      .team-grid { grid-template-columns: repeat(2, 1fr); }
+    }
+
+    .member-card {
+      background: #fff;
+      border: 1px solid #e8e8e8;
+      border-radius: 14px;
+      padding: 1.1rem 0.75rem 0.9rem;
+      text-align: center;
+      cursor: pointer;
+      text-decoration: none;
+      display: block;
+      transition: box-shadow 0.15s, transform 0.15s, border-color 0.15s;
+    }
+    .member-card:hover {
+      box-shadow: 0 4px 20px rgba(219,0,17,0.12);
+      border-color: #DB0011;
+      transform: translateY(-2px);
+    }
+
+    .avatar-wrap {
+      position: relative;
+      width: 68px;
+      height: 68px;
+      margin: 0 auto 0.65rem;
+    }
+    .avatar-circle {
+      width: 68px;
+      height: 68px;
+      border-radius: 50%;
+      background: #f0f0f0;
+      border: 1.5px solid #e0e0e0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      overflow: hidden;
+      position: relative;
+    }
+    .avatar-circle img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      border-radius: 50%;
+      display: block;
+    }
+    .avatar-placeholder {
+      font-size: 18px;
+      font-weight: 600;
+      color: #aaa;
+      font-family: 'Inter', sans-serif;
+    }
+
+    /* Hover overlay on avatar */
+    .avatar-overlay {
+      position: absolute;
+      inset: 0;
+      border-radius: 50%;
+      background: rgba(219,0,17,0.82);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      opacity: 0;
+      transition: opacity 0.18s;
+      pointer-events: none;
+    }
+    .avatar-wrap:hover .avatar-overlay { opacity: 1; }
+    .avatar-overlay-text {
+      font-size: 9px;
+      font-weight: 500;
+      color: #fff;
+      text-align: center;
+      line-height: 1.3;
+      padding: 0 4px;
+      font-family: 'Inter', sans-serif;
+    }
+
+    .member-name {
+      font-size: 11.5px;
+      font-weight: 500;
+      color: #1a1a1a;
+      margin-bottom: 0.55rem;
+      line-height: 1.3;
+      font-family: 'Inter', sans-serif;
+    }
+
+    .li-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 5px;
+      font-size: 10.5px;
+      font-weight: 500;
+      padding: 4px 10px;
+      border-radius: 20px;
+      border: 1px solid #d0d0d0;
+      color: #555;
+      background: transparent;
+      cursor: pointer;
+      text-decoration: none;
+      transition: background 0.12s, color 0.12s, border-color 0.12s;
+      font-family: 'Inter', sans-serif;
+    }
+    .li-btn:hover {
+      background: #0077b5;
+      color: #fff;
+      border-color: #0077b5;
+    }
+    .li-icon {
+      width: 12px;
+      height: 12px;
+      flex-shrink: 0;
+    }
+
+    /* ── PHOTOS SECTION ── */
+    .photos-card {
+      background: #fff;
+      border: 1px solid #e8e8e8;
+      border-radius: 14px;
+      overflow: hidden;
+      margin-bottom: 1.5rem;
+    }
+
+    .podium-img-wrap {
+      position: relative;
+      width: 100%;
+      aspect-ratio: 16 / 7;
+      background: #1a1a1a;
+      overflow: hidden;
+      cursor: pointer;
+    }
+    .podium-img-wrap img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      object-position: center 18%;
+      display: block;
+      transition: transform 0.3s, opacity 0.3s;
+    }
+    .podium-img-wrap:hover img {
+      transform: scale(1.02);
+      opacity: 0.7;
+    }
+
+    /* The hover prompt over the photo */
+    .photo-hover-prompt {
+      position: absolute;
+      inset: 0;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      opacity: 0;
+      transition: opacity 0.2s;
+      pointer-events: none;
+      z-index: 2;
+    }
+    .podium-img-wrap:hover .photo-hover-prompt { opacity: 1; }
+    .photo-hover-prompt-icon {
+      width: 44px;
+      height: 44px;
+      border-radius: 50%;
+      background: rgba(255,255,255,0.95);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .photo-hover-prompt-text {
+      font-size: 13px;
+      font-weight: 500;
+      color: #fff;
+      text-shadow: 0 1px 4px rgba(0,0,0,0.6);
+      font-family: 'Inter', sans-serif;
+    }
+    .photo-hover-prompt-sub {
+      font-size: 11px;
+      color: rgba(255,255,255,0.8);
+      text-shadow: 0 1px 3px rgba(0,0,0,0.5);
+      font-family: 'Inter', sans-serif;
+    }
+
+    .podium-gradient {
+      position: absolute;
+      bottom: 0; left: 0; right: 0;
+      height: 60%;
+      background: linear-gradient(to top, rgba(0,0,0,0.65) 0%, transparent 100%);
+      pointer-events: none;
+      z-index: 1;
+    }
+    .podium-caption {
+      position: absolute;
+      bottom: 0; left: 0; right: 0;
+      padding: 0.9rem 1.1rem;
+      z-index: 1;
+      pointer-events: none;
+    }
+    .podium-caption-title {
+      font-size: 13px;
+      font-weight: 500;
+      color: #fff;
+      font-family: 'Inter', sans-serif;
+    }
+    .podium-caption-sub {
+      font-size: 11px;
+      color: rgba(255,255,255,0.7);
+      margin-top: 2px;
+      font-family: 'Inter', sans-serif;
+    }
+
+    .photos-cta {
+      padding: 0.9rem 1.1rem;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+      border-top: 1px solid #f0f0f0;
+    }
+    .photos-cta-text {
+      font-size: 12.5px;
+      color: #555;
+      font-family: 'Inter', sans-serif;
+    }
+    .photos-cta-text strong {
+      color: #1a1a1a;
+      font-weight: 500;
+    }
+    .album-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      font-size: 12px;
+      font-weight: 500;
+      padding: 7px 16px;
+      border-radius: 20px;
+      border: 1px solid #d0d0d0;
+      color: #1a1a1a;
+      background: #fff;
+      cursor: pointer;
+      text-decoration: none;
+      white-space: nowrap;
+      transition: background 0.12s, border-color 0.12s, color 0.12s;
+      font-family: 'Inter', sans-serif;
+    }
+    .album-btn:hover {
+      background: #DB0011;
+      border-color: #DB0011;
+      color: #fff;
+    }
+
+    /* ── FOOTER ── */
+    .footer {
+      text-align: center;
+      font-size: 11px;
+      color: #bbb;
+      font-family: 'Inter', sans-serif;
+    }
+  </style>
+</head>
+<body>
+<div class="page">
+
+  <!-- HERO -->
+  <div class="hero">
+    <div class="hero-eyebrow">Bangladesh University of Professionals</div>
+    <div class="hero-title">Team Six Seven</div>
+    <div class="hero-sub">HSBC / HKU Business Case Challenge 2026 &mdash; Hong Kong</div>
+  </div>
+
+  <!-- TEAM -->
+  <div class="team-grid">
+
+    <a class="member-card" href="https://www.linkedin.com/in/shakhawat-salim/" target="_blank" rel="noopener">
+      <div class="avatar-wrap">
+        <div class="avatar-circle">
+
+          <img src="ss.jpg" alt="Shakhawat Salim" />
+        </div>
+        <div class="avatar-overlay">
+          <span class="avatar-overlay-text">View<br/>LinkedIn</span>
+        </div>
+      </div>
+      <div class="member-name">Shakhawat Salim</div>
+      <span class="li-btn">
+        <svg class="li-icon" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+          <path d="M19 0h-14c-2.761 0-5 2.239-5 5v14c0 2.761 2.239 5 5 5h14c2.762 0 5-2.239 5-5v-14c0-2.761-2.238-5-5-5zm-11 19h-3v-11h3v11zm-1.5-12.268c-.966 0-1.75-.79-1.75-1.764s.784-1.764 1.75-1.764 1.75.79 1.75 1.764-.783 1.764-1.75 1.764zm13.5 12.268h-3v-5.604c0-3.368-4-3.113-4 0v5.604h-3v-11h3v1.765c1.396-2.586 7-2.777 7 2.476v6.759z"/>
+        </svg>
+        LinkedIn
+      </span>
+    </a>
+
+    <a class="member-card" href="https://www.linkedin.com/in/naveed-abrar" target="_blank" rel="noopener">
+      <div class="avatar-wrap">
+        <div class="avatar-circle">
+          
+          <img src="na.jpg" alt="Naveed Abrar" />
+        </div>
+        <div class="avatar-overlay">
+          <span class="avatar-overlay-text">View<br/>LinkedIn</span>
+        </div>
+      </div>
+      <div class="member-name">Naveed Abrar</div>
+      <span class="li-btn">
+        <svg class="li-icon" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+          <path d="M19 0h-14c-2.761 0-5 2.239-5 5v14c0 2.761 2.239 5 5 5h14c2.762 0 5-2.239 5-5v-14c0-2.761-2.238-5-5-5zm-11 19h-3v-11h3v11zm-1.5-12.268c-.966 0-1.75-.79-1.75-1.764s.784-1.764 1.75-1.764 1.75.79 1.75 1.764-.783 1.764-1.75 1.764zm13.5 12.268h-3v-5.604c0-3.368-4-3.113-4 0v5.604h-3v-11h3v1.765c1.396-2.586 7-2.777 7 2.476v6.759z"/>
+        </svg>
+        LinkedIn
+      </span>
+    </a>
+
+    <a class="member-card" href="https://www.linkedin.com/in/ridwansakibanjum" target="_blank" rel="noopener">
+      <div class="avatar-wrap">
+        <div class="avatar-circle">
+          
+          <img src="ra.jpg" alt="Ridwan Sakib Anjum" />
+        </div>
+        <div class="avatar-overlay">
+          <span class="avatar-overlay-text">View<br/>LinkedIn</span>
+        </div>
+      </div>
+      <div class="member-name">Ridwan Sakib Anjum</div>
+      <span class="li-btn">
+        <svg class="li-icon" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+          <path d="M19 0h-14c-2.761 0-5 2.239-5 5v14c0 2.761 2.239 5 5 5h14c2.762 0 5-2.239 5-5v-14c0-2.761-2.238-5-5-5zm-11 19h-3v-11h3v11zm-1.5-12.268c-.966 0-1.75-.79-1.75-1.764s.784-1.764 1.75-1.764 1.75.79 1.75 1.764-.783 1.764-1.75 1.764zm13.5 12.268h-3v-5.604c0-3.368-4-3.113-4 0v5.604h-3v-11h3v1.765c1.396-2.586 7-2.777 7 2.476v6.759z"/>
+        </svg>
+        LinkedIn
+      </span>
+    </a>
+
+    <a class="member-card" href="https://www.linkedin.com/in/fhsowad/" target="_blank" rel="noopener">
+      <div class="avatar-wrap">
+        <div class="avatar-circle">
+          
+          <img src="fs.jpg" alt="Faiyad Hossain Sowad" />
+        </div>
+        <div class="avatar-overlay">
+          <span class="avatar-overlay-text">View<br/>LinkedIn</span>
+        </div>
+      </div>
+      <div class="member-name">Faiyad Hossain Sowad</div>
+      <span class="li-btn">
+        <svg class="li-icon" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+          <path d="M19 0h-14c-2.761 0-5 2.239-5 5v14c0 2.761 2.239 5 5 5h14c2.762 0 5-2.239 5-5v-14c0-2.761-2.238-5-5-5zm-11 19h-3v-11h3v11zm-1.5-12.268c-.966 0-1.75-.79-1.75-1.764s.784-1.764 1.75-1.764 1.75.79 1.75 1.764-.783 1.764-1.75 1.764zm13.5 12.268h-3v-5.604c0-3.368-4-3.113-4 0v5.604h-3v-11h3v1.765c1.396-2.586 7-2.777 7 2.476v6.759z"/>
+        </svg>
+        LinkedIn
+      </span>
+    </a>
+
+  </div>
+
+  <!-- PHOTOS -->
+  <div class="photos-card">
+    <a href="https://photos.app.goo.gl/YV7PGpoFwabP1Gyd8" target="_blank" rel="noopener" style="display:block; text-decoration:none;">
+      <div class="podium-img-wrap">
+        <img src="Global_Stage.jpg" alt="Team Six Seven receiving 2nd Runner-up award on stage at HSBC/HKU Business Case Challenge, Hong Kong" />
+        <div class="podium-gradient"></div>
+        <div class="podium-caption">
+          <div class="podium-caption-title">2nd Runner-up &middot; HSBC/HKU Business Case Challenge</div>
+          <div class="podium-caption-sub">Final Round &mdash; June 5, 2026 &middot; Hong Kong</div>
+        </div>
+        <!-- Hover prompt -->
+        <div class="photo-hover-prompt">
+          <div class="photo-hover-prompt-icon">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#DB0011" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+              <rect x="3" y="3" width="18" height="18" rx="2"/>
+              <circle cx="8.5" cy="8.5" r="1.5"/>
+              <polyline points="21 15 16 10 5 21"/>
+            </svg>
+          </div>
+          <div class="photo-hover-prompt-text">Open Google Photos album</div>
+          <div class="photo-hover-prompt-sub">Photos &amp; videos from Hong Kong</div>
+        </div>
+      </div>
+    </a>
+    <div class="photos-cta">
+      <div class="photos-cta-text"><strong>See us in action</strong> &mdash; photos &amp; videos from the global rounds in Hong Kong</div>
+      <a class="album-btn" href="https://photos.app.goo.gl/YV7PGpoFwabP1Gyd8" target="_blank" rel="noopener">
+        <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+          <rect x="3" y="3" width="18" height="18" rx="2"/>
+          <circle cx="8.5" cy="8.5" r="1.5"/>
+          <polyline points="21 15 16 10 5 21"/>
+        </svg>
+        View album
+      </a>
+    </div>
+  </div>
+
+  <div class="footer">Bangladesh University of Professionals &middot; Team Six Seven &middot; 2026</div>
+
+</div>
+</body>
+</html>
